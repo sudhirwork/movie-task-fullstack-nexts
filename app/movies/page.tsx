@@ -1,26 +1,20 @@
 import Button from "@/components/ui/button";
+import Link from "next/link";
 import React from "react";
+import LogoutButton from "./logout-button";
+import MovieItem from "./movie-item";
+import MovieHeader from "./movie-header";
 
 export default function Movies() {
   return (
     <div className="movie-main movie-list-screen">
       <div className="ml-main">
-        <div className="ml-header">
-          <h4>
-            My movies
-            <Button variant="ghost">
-              <img src="/plus-circle.svg" alt="" />
-            </Button>
-          </h4>
-          <a href="javascript:;" className="logout">
-            Logout{" "}
-            <span>
-              <img src="/logout.svg" alt="" />
-            </span>
-          </a>
-        </div>
+        <MovieHeader />
         <div className="ml-body">
           <div className="ml-lists">
+            <MovieItem title="Movie 1" releaseYear={2021} thumbnail="/m1.png" />
+            <MovieItem title="Movie 1" releaseYear={2021} thumbnail="/m2.png" />
+            <MovieItem title="Movie 1" releaseYear={2021} thumbnail="/m3.png" />
             <a href="javascript:;" className="ml-list-item">
               <figure>
                 <img src="/m1.png" alt="" />

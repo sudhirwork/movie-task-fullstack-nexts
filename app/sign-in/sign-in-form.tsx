@@ -1,8 +1,13 @@
 "use client";
 
+import { useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+
+import { signIn } from "next-auth/react";
 
 import Button from "@/components/ui/button";
 import Checkbox from "@/components/ui/checkbox";
@@ -16,16 +21,39 @@ const schema = Yup.object({
 });
 
 export default function SignInForm() {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    setError,
+    formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const handleSubmitForm = (data: any) => {
-    console.log(data);
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
+
+  const handleSubmitForm = async (data: any) => {
+    setIsLoading(true);
+    try {
+      const res = await signIn("credentials", {
+        ...data,
+        redirect: false,
+        callbackUrl: callbackUrl,
+      });
+
+      if (!res?.error) {
+        router.push(callbackUrl);
+      } else {
+        setError("password", { message: "invalid email or password" });
+      }
+    } catch (err) {
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -48,8 +76,8 @@ export default function SignInForm() {
             error={errors.password?.message}
           />
           <Checkbox id="remember" label="Remember me" />
-          <Button variant="primary" type="submit">
-            Login
+          <Button variant="primary" type="submit" isLoading={isLoading}>
+            {isLoading ? "Signing in..." : "Sign in"}
           </Button>
         </form>
       </div>

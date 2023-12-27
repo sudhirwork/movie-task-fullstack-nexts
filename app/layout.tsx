@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "@/styles/style.css";
 import "@/styles/other.css";
 import Footer from "@/components/footer";
+import Provider from "./provider";
 
 const montserrat = Montserrat({ subsets: ["latin"] });
 
@@ -19,10 +20,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={montserrat.className}>
-        {children}
-        <Footer />
-      </body>
+      <Provider>
+        <body className={montserrat.className}>
+          {children}
+          <Footer />
+        </body>
+      </Provider>
     </html>
   );
 }

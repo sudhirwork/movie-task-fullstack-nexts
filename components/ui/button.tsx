@@ -1,4 +1,5 @@
 import { cva, type VariantProps } from "class-variance-authority";
+import { boolean } from "yup";
 
 const button = cva("", {
   variants: {
@@ -13,12 +14,25 @@ const button = cva("", {
   },
 });
 
-export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
-  VariantProps<typeof button>;
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof button> {
+  isLoading?: boolean;
+}
 
-export default function Button({ variant, children, ...rest }: ButtonProps) {
+export default function Button({
+  variant,
+  children,
+  isLoading,
+  disabled,
+  ...rest
+}: ButtonProps) {
   return (
-    <button className={button({ variant })} {...rest}>
+    <button
+      className={button({ variant })}
+      disabled={disabled || isLoading}
+      {...rest}
+    >
       {children}
     </button>
   );
