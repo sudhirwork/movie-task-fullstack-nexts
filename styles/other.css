@@ -20,3 +20,14 @@ input[type="number"] {
   color: #eb5757;
   margin-top: 0.4em;
 }
+
+/* upload image */
+.upload-img.has-error {
+  border-radius: 10px;
+  border: 2px dashed #eb5757 !important;
+}
+
+.upload-img.has-error .error-message {
+  font-size: 0.7em;
+  color: #eb5757 !important;
+}
