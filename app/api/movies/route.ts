@@ -4,6 +4,7 @@ import { writeFile } from "fs/promises";
 import path from "path";
 import { connectDb, disconnectDb } from "@/lib/connection";
 import * as Yup from "yup";
+import { put } from "@vercel/blob";
 
 const schema = Yup.object({
   title: Yup.string().required(),
@@ -54,16 +55,9 @@ export async function POST(req: NextRequest) {
     if (!file) throw new Error("File is required");
 
     // upload file
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-
-    let url = path.join(process.cwd(), `/public/upload/${file.name}`);
-    await writeFile(url, buffer);
-
-    // replace url here
-    url = url
-      .replaceAll("\\", "/")
-      .substring(url.indexOf("\\upload"), url.length);
+    const { url } = await put(`poster/${file.name}`, file, {
+      access: "public",
+    });
 
     // validate payload
     const payload = { title, publishingYear, poster: url };
@@ -93,17 +87,10 @@ export async function PUT(req: NextRequest) {
     let url;
 
     if (file !== null) {
-      // upload file
-      const bytes = await file.arrayBuffer();
-      const buffer = Buffer.from(bytes);
-
-      url = path.join(process.cwd(), `/public/upload/${file.name}`);
-      await writeFile(url, buffer);
-
-      // replace url here
-      url = url
-        .replaceAll("\\", "/")
-        .substring(url.indexOf("\\upload"), url.length);
+      const { url: newUrl } = await put(`poster/${file.name}`, file, {
+        access: "public",
+      });
+      url = newUrl;
     }
 
     const update: any = { title, publishingYear };
