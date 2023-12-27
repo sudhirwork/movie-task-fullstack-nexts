@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { withAuth } from "next-auth/middleware";
 
-import path from "path";
-const __dirname = path.dirname(new URL(import.meta.url).pathname);
-
 export default withAuth(
   (req: NextRequest) => {
     const res = NextResponse.next();
