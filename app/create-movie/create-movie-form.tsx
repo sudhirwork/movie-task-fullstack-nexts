@@ -20,7 +20,7 @@ const schema = Yup.object({
       },
     })
     .test({
-      message: "Please select a file",
+      message: "Please pick an image file",
       test: (file: any, context: any) => {
         if (file.length === 0) return false;
         const isValid = ["image/jpeg", "image/jpg", "image/png"].includes(
@@ -96,7 +96,7 @@ export default function CreateMovieForm() {
                 errors.file ? "has-error" : ""
               }`}
             >
-              {file && (
+              {file && !errors.file && (
                 <Image
                   src={URL.createObjectURL(file)}
                   alt=""

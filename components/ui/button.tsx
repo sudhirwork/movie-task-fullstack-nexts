@@ -1,5 +1,4 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import { boolean } from "yup";
 
 const button = cva("", {
   variants: {

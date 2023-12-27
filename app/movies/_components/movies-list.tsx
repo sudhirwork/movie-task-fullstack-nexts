@@ -8,6 +8,7 @@ export default async function MoviesList() {
       {movies.map((movie) => (
         <MovieItem
           key={movie._id}
+          id={movie._id}
           releaseYear={movie.publishingYear}
           title={movie.title}
           thumbnail={movie.poster}
