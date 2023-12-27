@@ -21,8 +21,17 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const user = { id: "1", name: "Admin", email: "admin@admin.com" };
-        return user;
+        const BASE_URL = process.env.NEXTAUTH_URL || "http://localhost:3000";
+        const res = await fetch(`${BASE_URL}/api/users`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(credentials),
+        });
+
+        const data = await res.json();
+        return data.user;
       },
     }),
   ],
