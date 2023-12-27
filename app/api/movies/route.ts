@@ -11,6 +11,9 @@ const schema = Yup.object({
   poster: Yup.string().required(),
 });
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function GET(req: NextRequest) {
   try {
     await connectDb();
@@ -57,5 +60,41 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: error }, { status: 500 });
   } finally {
     disconnectDb();
+  }
+}
+
+export async function PUT(req: NextRequest) {
+  try {
+    const formData = await req.formData();
+    const id = formData.get("id");
+    const title = formData.get("title");
+    const publishingYear = formData.get("publishingYear");
+
+    const file: File | null = formData.get("file") as unknown as File;
+
+    let url;
+
+    if (file !== null) {
+      // upload file
+      const bytes = await file.arrayBuffer();
+      const buffer = Buffer.from(bytes);
+
+      url = path.join(process.cwd(), `/public/upload/${file.name}`);
+      await writeFile(url, buffer);
+
+      // replace url here
+      url = url
+        .replaceAll("\\", "/")
+        .substring(url.indexOf("\\upload"), url.length);
+    }
+
+    const update: any = { title, publishingYear };
+    if (url || url !== "undefined") update.poster = url;
+
+    await connectDb();
+    const res = await Movie.findByIdAndUpdate(id, update);
+    return NextResponse.json(res);
+  } catch (error) {
+    return NextResponse.json({ error }, { status: 500 });
   }
 }
