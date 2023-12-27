@@ -21,7 +21,7 @@ const MovieLoadingItem = () => (
 export default function MoviesListLoading() {
   return (
     <div className="ml-lists">
-      {Array.from({ length: 5 }, (_, i) => (
+      {Array.from({ length: 8 }, (_, i) => (
         <MovieLoadingItem key={`__movie_loading_${i}`} />
       ))}
     </div>

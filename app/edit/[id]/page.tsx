@@ -1,6 +1,11 @@
 import React from "react";
 import EditForm from "./edit-form";
 import fetchMovieById from "./_actions/fetchMovieById";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Edit",
+};
 
 type Props = {
   params: { id: string };

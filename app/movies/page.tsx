@@ -4,6 +4,11 @@ import MoviesList from "./_components/movies-list";
 import MoviesListLoading from "./_components/movies-list-loading";
 import { getMovies } from "./_actions/getMovies";
 import EmptyMovie from "./_components/empty-movie";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Movies",
+};
 
 type Props = {
   params: {
