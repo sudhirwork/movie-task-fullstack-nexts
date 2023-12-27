@@ -783,7 +783,7 @@ footer figure {
   }
   footer figure {
     position: relative;
-    background-image: url("/public/mobile-bottom-shape.svg");
+    background-image: url("/mobile-bottom-shape.svg");
     height: 100px;
     background-size: cover;
     background-repeat: no-repeat;
