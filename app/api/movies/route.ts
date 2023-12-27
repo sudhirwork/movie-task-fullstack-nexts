@@ -1,5 +1,7 @@
 import Movie from "@/models/Movie";
 import { NextRequest, NextResponse } from "next/server";
+import { writeFile } from "fs/promises";
+import path from "path";
 import { connectDb, disconnectDb } from "@/lib/connection";
 import * as Yup from "yup";
 
@@ -23,7 +25,27 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const payload = await req.json();
+    const formData = await req.formData();
+    const title = formData.get("title");
+    const publishingYear = formData.get("publishingYear");
+    const file: File | null = formData.get("file") as unknown as File;
+
+    if (!file) throw new Error("File is required");
+
+    // upload file
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    let url = path.join(process.cwd(), `/public/upload/${file.name}`);
+    await writeFile(url, buffer);
+
+    // replace url here
+    url = url
+      .replaceAll("\\", "/")
+      .substring(url.indexOf("\\upload"), url.length);
+
+    // validate payload
+    const payload = { title, publishingYear, poster: url };
     await schema.validate(payload);
 
     await connectDb();
@@ -31,6 +53,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(res);
   } catch (error) {
+    console.error(error);
     return NextResponse.json({ error: error }, { status: 500 });
   } finally {
     disconnectDb();

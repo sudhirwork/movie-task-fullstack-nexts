@@ -8,6 +8,7 @@ import { useForm, Controller } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
+import createMovie from "./_actions/createMovie";
 
 const schema = Yup.object({
   file: Yup.mixed()
@@ -51,8 +52,6 @@ export default function CreateMovieForm() {
   const {
     register,
     handleSubmit,
-    setError,
-    control,
     reset,
     watch,
     formState: { errors },
@@ -69,10 +68,16 @@ export default function CreateMovieForm() {
     setIsLoading(true);
     try {
       const formData = new FormData();
-      formData.append("file", file[0]);
+
+      formData.append("file", file);
       formData.append("title", data.title);
       formData.append("publishingYear", data.publishingYear);
-      console.log(data);
+
+      const { response, error } = await createMovie(formData);
+      if (error) throw error;
+
+      reset();
+      setFile(null);
     } catch (err) {
       console.log(err);
     } finally {
@@ -140,7 +145,9 @@ export default function CreateMovieForm() {
                 >
                   Cancel
                 </Button>
-                <Button variant="primary">Submit</Button>
+                <Button variant="primary" isLoading={isLoading}>
+                  Submit
+                </Button>
               </div>
             </div>
             <div className="action-btn d-flex d-md-none order-3">
@@ -155,7 +162,9 @@ export default function CreateMovieForm() {
               >
                 Cancel
               </Button>
-              <Button variant="primary">Submit</Button>
+              <Button variant="primary" isLoading={isLoading}>
+                Submit
+              </Button>
             </div>
           </div>
         </form>
