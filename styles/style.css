@@ -241,6 +241,16 @@ img {
   outline: none;
   border-color: #224957;
 }
+.btn-ghost {
+  position: relative;
+  background: none;
+  padding: 0.3rem 0.5rem;
+}
+.btn-ghost:focus-visible {
+  outline: none;
+  border: none;
+}
+
 .mprimary-btn {
   position: relative;
   display: block;
@@ -310,6 +320,7 @@ footer figure {
   position: relative;
   display: block;
   width: 100%;
+  min-height: 104px;
   height: auto;
   overflow: hidden;
   margin: 0;
@@ -505,6 +516,7 @@ footer figure {
   margin-right: 127px;
 }
 .cmovie-main .cmovie-fold .upload-img figure {
+  position: relative;
   width: 24px;
   height: 24px;
   overflow: hidden;
@@ -577,6 +589,7 @@ footer figure {
 
 @media only screen and (max-width: 1439px) {
   .ml-body .ml-lists .ml-list-item figure {
+    position: relative;
     height: 320px;
   }
 }
@@ -625,6 +638,7 @@ footer figure {
     padding: 100px 100px 0;
   }
   footer figure {
+    position: relative;
     height: 100px;
   }
   .empty-screen h2 {
@@ -635,6 +649,7 @@ footer figure {
     padding: 80px 50px;
   }
   .ml-body .ml-lists .ml-list-item figure {
+    position: relative;
     height: 246px;
   }
   .ml-main .ml-body .ml-lists {
@@ -687,6 +702,7 @@ footer figure {
     margin-bottom: 0;
   }
   .ml-body .ml-lists .ml-list-item figure {
+    position: relative;
     margin-bottom: 12px;
     border-radius: 12px 12px 0 0;
   }
@@ -766,6 +782,7 @@ footer figure {
     display: none;
   }
   footer figure {
+    position: relative;
     background-image: url("/public/mobile-bottom-shape.svg");
     height: 100px;
     background-size: cover;
@@ -795,6 +812,7 @@ footer figure {
     line-height: 52px;
   }
   .ml-body .ml-lists .ml-list-item figure {
+    position: relative;
     height: 160px;
   }
   .movie-list-screen .ml-main .ml-header {
