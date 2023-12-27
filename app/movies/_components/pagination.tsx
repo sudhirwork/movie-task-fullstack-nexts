@@ -28,50 +28,18 @@ export default function Pagination({
           </Link>
         </li>
 
-        {pageNumbers.map((pageNumber, index) => {
-          // Show first two and last two page numbers, and use ellipsis for the rest
-          const isFirstTwo = index < 2;
-          const isLastTwo = index >= totalPages - 2;
-          const isEllipsis = !isFirstTwo && !isLastTwo;
-
-          return (
-            <React.Fragment key={pageNumber}>
-              {isFirstTwo && (
-                <li
-                  className={`page-item ${
-                    pageNumber === currentPage ? "active" : ""
-                  }`}
-                >
-                  <Link
-                    className="page-link index"
-                    href={`?page=${pageNumber}`}
-                  >
-                    {pageNumber}
-                  </Link>
-                </li>
-              )}
-              {isEllipsis && index === 2 && (
-                <li className="page-item disabled">
-                  <span className="page-link">...</span>
-                </li>
-              )}
-              {isLastTwo && (
-                <li
-                  className={`page-item ${
-                    pageNumber === currentPage ? "active" : ""
-                  }`}
-                >
-                  <Link
-                    className="page-link index"
-                    href={`?page=${pageNumber}`}
-                  >
-                    {pageNumber}
-                  </Link>
-                </li>
-              )}
-            </React.Fragment>
-          );
-        })}
+        {pageNumbers.map((pageNumber, index) => (
+          <li
+            key={index}
+            className={`page-item ${
+              pageNumber === currentPage ? "active" : ""
+            }`}
+          >
+            <Link className="page-link index" href={`?page=${pageNumber}`}>
+              {pageNumber}
+            </Link>
+          </li>
+        ))}
 
         <li
           className={`page-item ${

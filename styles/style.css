@@ -696,7 +696,7 @@ footer figure {
     margin-right: 0;
   }
   .movie-list-screen .pagination {
-    display: none;
+    /* display: none; */
   }
   .ml-main .ml-body .ml-lists {
     margin-bottom: 0;
