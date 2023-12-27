@@ -38,12 +38,14 @@ export default function SignInForm() {
             placeholder="Email"
             register={register}
             name="email"
+            error={errors.email?.message}
           />
           <Input
             type="password"
             placeholder="Password"
             register={register}
             name="password"
+            error={errors.password?.message}
           />
           <Checkbox id="remember" label="Remember me" />
           <Button variant="primary" type="submit">

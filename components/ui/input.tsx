@@ -5,17 +5,19 @@ export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   name: string;
   register: UseFormRegister<any>;
+  error?: string;
 }
 
 export default function Input({
   type = "text",
   placeholder = "Default placeholder",
   name,
+  error,
   register,
   ...rest
 }: InputProps) {
   return (
-    <div className="form-group">
+    <div className={`form-group ${error ? "has-error" : ""}`}>
       <input
         type={type}
         className="form-control"
@@ -23,6 +25,7 @@ export default function Input({
         {...register(name)}
         {...rest}
       />
+      {error && <label className="error-message">{error}</label>}
     </div>
   );
 }

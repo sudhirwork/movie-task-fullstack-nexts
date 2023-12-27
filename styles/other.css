@@ -1,0 +1,10 @@
+.form-group.has-error input {
+  border-color: #eb5757;
+  caret-color: #eb5757;
+}
+
+.form-group.has-error label {
+  font-size: 0.8em;
+  color: #eb5757;
+  margin-top: 0.4em;
+}
