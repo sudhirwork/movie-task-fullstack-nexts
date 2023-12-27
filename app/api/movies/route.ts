@@ -15,10 +15,28 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export async function GET(req: NextRequest) {
+  const PAGE_SIZE = 1;
+
   try {
+    let page: string | number | null = req.nextUrl.searchParams.get("page");
+
+    let skip = 0;
+    let limit = PAGE_SIZE;
+
+    if (page) {
+      page = parseInt(page);
+      skip = (page - 1) * PAGE_SIZE;
+      limit = PAGE_SIZE;
+    }
+
     await connectDb();
-    const res = await Movie.find();
-    return NextResponse.json(res);
+    const res = await Movie.find().skip(skip).limit(limit);
+    const items = await Movie.countDocuments();
+
+    return NextResponse.json({
+      data: res,
+      totalPages: Math.ceil(items / PAGE_SIZE),
+    });
   } catch (error) {
     return NextResponse.json({ error: error }, { status: 500 });
   } finally {
