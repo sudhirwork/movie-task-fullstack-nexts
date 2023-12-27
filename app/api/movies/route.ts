@@ -15,7 +15,7 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export async function GET(req: NextRequest) {
-  const PAGE_SIZE = 1;
+  const PAGE_SIZE = 8;
 
   try {
     let page: string | number | null = req.nextUrl.searchParams.get("page");

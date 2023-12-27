@@ -1,4 +1,5 @@
 import { getMovies } from "../_actions/getMovies";
+import EmptyMovie from "./empty-movie";
 import MovieItem from "./movie-item";
 import Pagination from "./pagination";
 
