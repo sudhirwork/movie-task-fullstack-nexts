@@ -9,6 +9,7 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
 import createMovie from "./_actions/createMovie";
+import { useRouter } from "next/navigation";
 
 const schema = Yup.object({
   file: Yup.mixed()
@@ -48,6 +49,7 @@ const schema = Yup.object({
 export default function CreateMovieForm() {
   const [file, setFile] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
 
   const {
     register,
@@ -76,13 +78,18 @@ export default function CreateMovieForm() {
       const { response, error } = await createMovie(formData);
       if (error) throw error;
 
-      reset();
-      setFile(null);
+      router.back();
     } catch (err) {
       console.log(err);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleCancel = () => {
+    reset();
+    setFile(null);
+    router.back();
   };
 
   return (
@@ -137,11 +144,7 @@ export default function CreateMovieForm() {
                 <Button
                   type="button"
                   variant="secondary"
-                  onClick={() => {
-                    setFile(null);
-                    reset();
-                    setIsLoading(false);
-                  }}
+                  onClick={handleCancel}
                 >
                   Cancel
                 </Button>

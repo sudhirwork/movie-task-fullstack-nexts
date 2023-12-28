@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   title: "Edit",
 };
 
+export const revalidate = 0;
+
 type Props = {
   params: { id: string };
   searchParams: { [key: string]: string | string[] | undefined };

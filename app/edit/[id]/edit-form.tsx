@@ -11,6 +11,7 @@ import Button from "@/components/ui/button";
 import Input from "@/components/ui/input";
 
 import updateMovie from "./_actions/updateMovie";
+import { useRouter } from "next/navigation";
 
 const schema = Yup.object({
   file: Yup.mixed()
@@ -55,6 +56,7 @@ export default function EditForm({
 }: EditFormProps) {
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
 
   const {
     register,
@@ -84,7 +86,9 @@ export default function EditForm({
       formData.append("publishingYear", data.publishingYear);
 
       const response = await updateMovie(formData);
-      if (!response.error) alert("Movie updated successfully");
+      if (!response.error) {
+        router.back();
+      }
     } catch (err) {
       console.log(err);
     } finally {
@@ -148,9 +152,7 @@ export default function EditForm({
                   type="button"
                   variant="secondary"
                   onClick={() => {
-                    setFile(null);
-                    reset();
-                    setIsLoading(false);
+                    router.back();
                   }}
                 >
                   Cancel
