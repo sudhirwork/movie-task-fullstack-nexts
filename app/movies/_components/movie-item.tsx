@@ -16,7 +16,7 @@ export default function MovieItem({
   thumbnail,
 }: MovieItemProps) {
   return (
-    <Link href={`/edit/${id}`} className="ml-list-item">
+    <Link href={`/edit/${id}`} prefetch={true} className="ml-list-item">
       <figure>
         <Image src={thumbnail} alt="" fill />
       </figure>

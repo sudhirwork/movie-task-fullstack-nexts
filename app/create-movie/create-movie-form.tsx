@@ -1,15 +1,17 @@
 "use client";
 
-import Button from "@/components/ui/button";
-import Input from "@/components/ui/input";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
-import { useForm, Controller } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect, useState } from "react";
+
+import Button from "@/components/ui/button";
+import Input from "@/components/ui/input";
+
 import createMovie from "./_actions/createMovie";
-import { useRouter } from "next/navigation";
 
 const schema = Yup.object({
   file: Yup.mixed()

@@ -31,3 +31,7 @@ input[type="number"] {
   font-size: 0.7em;
   color: #eb5757 !important;
 }
+
+.page-item.disabled a {
+  color: grey !important;
+}
